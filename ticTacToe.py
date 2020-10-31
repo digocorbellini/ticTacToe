@@ -1,5 +1,10 @@
 import random
+
+board = ([[0,0,0],
+         [0,0,0],
+         [0,0,0]])
 isGameOver = False
+
 #Method to print out the board
 def printBoard(board):
     index1 = 0
@@ -95,7 +100,7 @@ def isBoardFilled():
                 return False
     return True
 
-#Checks to see if anyone has won
+#Checks to see if anyone has won or if there is a tie
 def checkBoard():
     global isGameOver
     if isBoardFilled():
@@ -121,7 +126,8 @@ def checkBoard():
     if diagonal == "111" or diagonal == "222":
         isGameOver = True
         return
-                
+
+#Kick off a round of tic tac toe           
 def startRound():
     global isGameOver
     global board
@@ -140,23 +146,25 @@ def startRound():
 
     print("GAME IS OVER")
 
-board = ([[0,0,0],
-         [0,0,0],
-         [0,0,0]])
+#print the controls of the game and wait for the player
+def printInstructions():
+    print("----CONTROLS----")
+    print("First letter is the row and the second letter is the column")
+    print("The rows can be T,M, or B")
+    print("The columns can be L,M, or R")
+    print("For example 'TL' would be the top left box")
+    print("and 'MM' would be the box in the middle row and the middle column")
+    input("---PRESS ANY KEY TO CONTINUE---")
 
+#main
+printInstructions()
 playerResponse = ""
+#Game will keep running until the player asks to quit by typing "exit"
 while(playerResponse != "exit"):
     startRound()
     playerResponse = input("type 'exit' to quit or anything else to retry")
 
 
-
-
-string = ""
-""" for i in range(0,3):
-    string += str(board[i][i])
-if(string == "111" or string == "222"):
-    isGameOver = True """
 
 
 
