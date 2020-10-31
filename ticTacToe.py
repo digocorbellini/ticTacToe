@@ -90,6 +90,9 @@ def makeMove(playerMove):
         return
     
     board[cell.row][cell.col] = 1
+    checkBoard()
+    if(not isGameOver):
+        botMove()
  
 #Check to see if board is filled
 def isBoardFilled():
@@ -102,16 +105,16 @@ def isBoardFilled():
 #Checks to see if anyone has won or if there is a tie
 def checkBoard():
     global isGameOver
-    if isBoardFilled():
-        print("board filled")
-        isGameOver = True
-        return
 
     diagonal1 = ""
     diagonal2 = ""
     for r in range(0,3):
         arrStr = str(board[r])
         if arrStr == "[2, 2, 2]" or arrStr == "[1, 1, 1]":
+            if(arrStr == "[1, 1, 1]"):
+                print("PLAYER WINS")
+            else:
+                print("COM WINS")   
             isGameOver = True
             return
         
@@ -122,10 +125,23 @@ def checkBoard():
         for c in range(0,3):
             column += str(board[c][r])
         if column == "111" or column == "222":
+            if column == "111":
+                print("PLAYER WINS")
+            else:
+                print("COM WINS")
             isGameOver = True
             return
     if (diagonal1 == "111" or diagonal1 == "222" or diagonal2 == "111" 
             or diagonal2 == "222"):
+        if diagonal1 == "111" or diagonal2 == "111":
+            print("PLAYER WINS")
+        else:
+            print("COM WINS")
+        isGameOver = True
+        return
+
+    if isBoardFilled():
+        print("TIE")
         isGameOver = True
         return
 
@@ -143,11 +159,9 @@ def startRound():
     while(not isGameOver):
         move = input("Make a move: ")
         makeMove(move)
-        checkBoard()
-        botMove()
-        checkBoard()
         print()
         printBoard(board)
+        checkBoard()
 
     print("GAME IS OVER")
 
