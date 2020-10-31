@@ -90,7 +90,6 @@ def makeMove(playerMove):
         return
     
     board[cell.row][cell.col] = 1
-    botMove()
  
 #Check to see if board is filled
 def isBoardFilled():
@@ -108,22 +107,25 @@ def checkBoard():
         isGameOver = True
         return
 
-    diagonal = ""
+    diagonal1 = ""
+    diagonal2 = ""
     for r in range(0,3):
         arrStr = str(board[r])
         if arrStr == "[2, 2, 2]" or arrStr == "[1, 1, 1]":
             isGameOver = True
             return
         
-        diagonal += str(board[r][r])
+        diagonal1 += str(board[r][r])
+        diagonal2 += str(board[r][2-r])
 
         column = ""
         for c in range(0,3):
-            column += str(board[r][c])
+            column += str(board[c][r])
         if column == "111" or column == "222":
             isGameOver = True
             return
-    if diagonal == "111" or diagonal == "222":
+    if (diagonal1 == "111" or diagonal1 == "222" or diagonal2 == "111" 
+            or diagonal2 == "222"):
         isGameOver = True
         return
 
@@ -136,10 +138,13 @@ def startRound():
             [0,0,0],
             [0,0,0]])
 
+    print()
     printBoard(board)
     while(not isGameOver):
-        move = input("Make a move")
+        move = input("Make a move: ")
         makeMove(move)
+        checkBoard()
+        botMove()
         checkBoard()
         print()
         printBoard(board)
@@ -148,13 +153,15 @@ def startRound():
 
 #print the controls of the game and wait for the player
 def printInstructions():
-    print("----CONTROLS----")
+    print()
+    print("----CONTROLS----\n")
+    print("Input a move by typing 2 letters")
     print("First letter is the row and the second letter is the column")
     print("The rows can be T,M, or B")
     print("The columns can be L,M, or R")
     print("For example 'TL' would be the top left box")
     print("and 'MM' would be the box in the middle row and the middle column")
-    input("---PRESS ANY KEY TO CONTINUE---")
+    input("\n---PRESS ANY KEY TO CONTINUE---")
 
 #main
 printInstructions()
@@ -162,7 +169,8 @@ playerResponse = ""
 #Game will keep running until the player asks to quit by typing "exit"
 while(playerResponse != "exit"):
     startRound()
-    playerResponse = input("type 'exit' to quit or anything else to retry")
+    print()
+    playerResponse = input("type 'exit' to quit or anything else to retry: ")
 
 
 
